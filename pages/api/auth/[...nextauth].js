@@ -83,6 +83,12 @@ const options = {
       //   ? Promise.resolve(url)
       //   : Promise.resolve(baseUrl);
     },
+    session: async (session, data) => {
+      // Access token available in the data for version v2
+      // https://github.com/iaincollins/next-auth/compare/main..v3#diff-06cbba295b0b2816cc9c0ff790ff8302R68
+      session.account = data.account;
+      return Promise.resolve(session);
+    },
   },
 
   // Events are useful for logging
@@ -90,7 +96,7 @@ const options = {
   events: {},
 
   // Enable debug messages in the console if you are having problems
-  debug: false,
+  debug: true,
 };
 
 export default (req, res) => NextAuth(req, res, options);

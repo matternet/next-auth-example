@@ -14,6 +14,8 @@ export const createQueryParams = (params) => {
 export default () => {
   const [session, loading] = useSession();
 
+  console.log(session);
+
   return (
     <header>
       <noscript>
@@ -58,9 +60,12 @@ export default () => {
                 onClick={(e) => {
                   e.preventDefault();
                   signOut({
-                    callbackUrl: `https://mttr-staging.auth0.com/v2/logout?${createQueryParams(
-                      { returnTo: "http://localhost:3000" }
-                    )}`,
+                    callbackUrl: `https://${
+                      process.env.AUTH0_DOMAIN
+                    }/v2/logout?${createQueryParams({
+                      returnTo: process.env.NEXTAUTH_URL,
+                      client_id: process.env.AUTH0_ID,
+                    })}`,
                   });
                 }}
               >
